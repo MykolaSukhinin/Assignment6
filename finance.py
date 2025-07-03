@@ -7,11 +7,11 @@ df = Tesla.history(period= '6mo')
 df = df[['Close']].copy()
 
 df['sma10'] = df['Close'].rolling(window=10).mean()
-df['sma40'] = df['Close'].rolling(window=40).mean()
+df['bma40'] = df['Close'].rolling(window=40).mean()
 
 df['Signal'] = 'hold'
-df.loc[(df['sma10'] > df['sma40']) & (df['sma10'].shift(1) <= df['sma40'].shift(1)), 'Signal'] = 'buy'
-df.loc[(df['sma10'] < df['sma40']) & (df['sma10'].shift(1) >= df['sma40'].shift(1) ), 'Signal'] = 'sell'
+df.loc[(df['sma10'] > df['bma40']) & (df['sma10'].shift(1) <= df['bma40'].shift(1)), 'Signal'] = 'buy'
+df.loc[(df['sma10'] < df['bma40']) & (df['sma10'].shift(1) >= df['bma40'].shift(1) ), 'Signal'] = 'sell'
  
 
 
@@ -29,7 +29,7 @@ print( 'Прибуток:', balance-1000)
 
 plt.plot(df['Close'])
 plt.plot(df['sma10'])
-plt.plot(df['sma40'])
+plt.plot(df['bma40'])
 
 plt.xlabel('date')
 plt.ylabel('price')
